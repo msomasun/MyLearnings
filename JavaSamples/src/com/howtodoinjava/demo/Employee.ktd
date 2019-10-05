@@ -1,0 +1,56 @@
+package com.howtodoinjava.demo
+
+import javax.xml.bind.annotation.XmlRootElement
+import java.util.Comparator
+
+
+@XmlRootElement
+class Employee : Comparable<Employee> {
+
+    internal var id: Int = 0
+    internal var fname: String
+    internal var lname: String
+    internal var tags: Array<String>
+
+    constructor() {}
+
+    //Compare by default by id only.
+    override fun compareTo(e1: Employee): Int {
+        return if (this.id < e1.id)
+            1
+        else if (this.id > e1.id)
+            -1
+        else
+            0
+    }
+
+    constructor(id: Int, fname: String, lname: String, tags: Array<String>) {
+        this.id = id
+        this.fname = fname
+        this.lname = lname
+        this.tags = tags
+    }
+}
+
+internal class ComparebyFirstName : Comparator<Employee> {
+    override fun compare(e1: Employee, e2: Employee): Int {
+        return e1.fname.compareTo(e2.fname)
+    }
+
+    override fun equals(obj: Any?): Boolean {
+        return false
+    }
+}
+
+internal class ComparebyTagarray : Comparator<Employee> {
+    override fun compare(e1: Employee, e2: Employee): Int {
+        return if (e1.tags < e2.tags)
+            1
+        else
+            -1
+    }
+
+    override fun equals(obj: Any?): Boolean {
+        return false
+    }
+}
